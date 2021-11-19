@@ -29,7 +29,7 @@ class InvBloom {
     // result.
     // TODO for subtract and subtract_cell, should I just overwrite
     // this with result instead of making a new IBF?
-    void subtract(const InvBloom &other, InvBloom *result);
+    bool subtract(const InvBloom &other, InvBloom *result);
 
     // Decode this IBF. 
     // missingB: list of elements that A contains but B doesn't.

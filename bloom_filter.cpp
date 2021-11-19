@@ -54,18 +54,22 @@ void InvBloom::encode(const std::vector<uint64_t> &set) {
 
 // Subtract IBF "other" from this IBF and store the result in
 // result.
+// Precondition: this, other, and result have the same k and n.
 // TODO for subtract and subtract_cell, should I just overwrite
 // this with result instead of making a new IBF?
-void InvBloom::subtract(const InvBloom &other, InvBloom *result) {
+bool InvBloom::subtract(const InvBloom &other, InvBloom *result) {
   if (other.k != this->k || result->k != this->k) {
-    // TODO raise error
+    std::cerr << "this IBF, other, and result must all be initialized with same k\n";
+    return false;    
   }
   if (other.n != this->n || result->n != this->n) {
-    // TODO raise error
+     std::cerr << "this IBF, other, and result must all be initialized with same n\n";
+    return false;
   }
   for (int i = 0; i < this->n; i++) {
     subtractCell(i, other.table[i], &result->table[i]);
   }
+  return true;
 }
 
 // Decode this IBF (results only make sense if this IBF was
@@ -173,10 +177,6 @@ uint32_t InvBloom::checksumHash(const uint64_t &elt) {
 // Populate "indices" (size of array is k) with computed indices
 // resulting from executing hash function.
 void InvBloom::encodeHash(const uint64_t &elt, int indices[]) {
-/*  if (sizeof(indices)/sizeof(indices[0]) != this->k) {
-    // TODO raise exception
-  }
-*/
   std::set<int> idxs;
   std::hash<std::string> hash_elt;
   // currently doing a hacky thing to get hash values to be different;

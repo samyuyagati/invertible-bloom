@@ -135,8 +135,8 @@ void testSubtract() {
   std::vector<uint64_t> mB_actual;
   std::vector<uint64_t> mA_actual;
   ibf1->subtract(*ibf2, subtracted);
-  subtracted->decode(&mB_actual, &mA_actual);
-
+  bool success = subtracted->decode(&mB_actual, &mA_actual);
+  assert(success == true);
 /*  fprintf(stdout, "mB_actual: {");
   for (uint64_t si : mB_actual) {
     std::cout << si << ",";

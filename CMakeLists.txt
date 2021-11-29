@@ -1,8 +1,21 @@
 cmake_minimum_required(VERSION 3.14)
 set (CMAKE_CXX_STANDARD 11)
 project(libibf)
+
 # Add source files
-add_executable(libibf bloom_filter.cpp bloom_filter_test.cpp)
+add_library(libibf STATIC bloom_filter.cpp)
+add_executable(ibftest bloom_filter_test.cpp)
+add_executable(ibfbm bloom_filter_benchmark.cpp)
+
+# Link test and benchmark code to library
+target_link_libraries(
+  ibftest
+  libibf
+)
+target_link_libraries(
+  ibfbm
+  libibf
+)
 
 ## Set up GoogleTest
 ## GoogleTest requires at least C++11

@@ -16,6 +16,7 @@ class InvBloom {
     std::vector<IbfCell> table; // array of cells
 
     // Constructor: takes desired number of cells and # hash fns.
+    // Precondition: k < d*alpha
     InvBloom(uint32_t d, uint32_t k, float alpha=1.5, float query_threshold=1); 
  
     // Class destructor

@@ -23,6 +23,7 @@ InvBloom::~InvBloom() {
 // Encode the set as an invertible bloom filter and store the
 // result in this.
 void InvBloom::encode(const std::vector<uint64_t> &set) {
+//  std::cout << "encode (k=" << this->k << ")\n";
   int idxs[this->k]; // init to 0 
   for (uint64_t s_i : set) {
     encodeHash(s_i, idxs);
@@ -30,8 +31,8 @@ void InvBloom::encode(const std::vector<uint64_t> &set) {
     for (int t = 0; t < this->k; t++) { 
       std::cout << idxs[t] << ",";
     }
+    std::cout << "\n";
 */
-//    std::cout << "\n";
     for (int j : idxs) {
       // bounds check
       if (j < 0 || j >= this->n) { continue; } // TODO raise error 
@@ -183,7 +184,7 @@ void InvBloom::encodeHash(const uint64_t &elt, int indices[]) {
   // should probably be a cryptographic hash function
   std::size_t prev_hash = hash_elt(std::to_string(elt));
   while (idxs.size() < this->k) {
-//    fprintf(stdout, "k: %d, # idxs: %d, prev_hash: %d, idx: %d\n", this->k, idxs.size(), prev_hash, prev_hash % this->n);
+//    fprintf(stdout, "n: %d, k: %d, # idxs: %d, prev_hash: %d, idx: %d\n", this->n, this->k, idxs.size(), prev_hash, prev_hash % this->n);
     idxs.insert(prev_hash % this->n);
     prev_hash = hash_elt(std::to_string(prev_hash));
   }
